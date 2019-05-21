@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.572
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckCorrectNumber", "CheckCorrectNumber\CheckCorrectNumber.csproj", "{9B1BCAF1-7D9B-4051-B0F8-7FB4E09A2386}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9B1BCAF1-7D9B-4051-B0F8-7FB4E09A2386}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B1BCAF1-7D9B-4051-B0F8-7FB4E09A2386}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B1BCAF1-7D9B-4051-B0F8-7FB4E09A2386}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B1BCAF1-7D9B-4051-B0F8-7FB4E09A2386}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F90D84AE-0EF8-4C50-90B6-A4C9F0115BE1}
+	EndGlobalSection
+EndGlobal
