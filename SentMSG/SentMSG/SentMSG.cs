@@ -26,7 +26,7 @@ namespace SentMSG
             IOrganizationService service = serviceFactory.CreateOrganizationService(context.InitiatingUserId);
 
             Guid SMSid = context.PrimaryEntityId;
-            String SMSType = context.PrimaryEntityName;
+            string SMSType = context.PrimaryEntityName;
             ColumnSet attribute = new ColumnSet(new string[] { "new_phone_number_recipient", "new_message", "new_messageid" });
 
             Entity SMSEntity = service.Retrieve(SMSType, SMSid, attribute);
