@@ -12,6 +12,7 @@ using Microsoft.Xrm.Sdk.Client;
 using Microsoft.Crm.Sdk.Messages;
 using Microsoft.Xrm.Sdk.Messages;
 using System.Xml;
+using System.Text.RegularExpressions;
 
 namespace SentMSG
 {
@@ -32,7 +33,9 @@ namespace SentMSG
             Entity SMSEntity = service.Retrieve(SMSType, SMSid, attribute);
 
             SMSEntity.Attributes["new_messageid"] = new Random().Next(0, 10000);
-
+            Regex regexObj = new Regex(@"[^\d]");
+            string correctNumber = ("+" + (string)regexObj.Replace((string)SMSEntity.Attributes["new_phone_number_recipient"], ""));
+            
             Boolean checkWrite = false;
             try
             {
@@ -46,7 +49,7 @@ namespace SentMSG
                 xmlWriter.WriteEndElement();
 
                 xmlWriter.WriteStartElement("Phonenumber");
-                xmlWriter.WriteString($"{SMSEntity.Attributes["new_phone_number_recipient"]}");
+                xmlWriter.WriteString($"{correctNumber}");
                 xmlWriter.WriteEndElement();
 
                 xmlWriter.WriteStartElement("Message");
