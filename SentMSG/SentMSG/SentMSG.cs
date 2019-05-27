@@ -27,12 +27,11 @@ namespace SentMSG
 
             Guid SMSid = context.PrimaryEntityId;
             String SMSType = context.PrimaryEntityName;
-            ColumnSet attribute = new ColumnSet(new string[] { "new_phone_number_recipient", "new_message", "new_messageid"});
+            ColumnSet attribute = new ColumnSet(new string[] { "new_phone_number_recipient", "new_message", "new_messageid" });
 
             Entity SMSEntity = service.Retrieve(SMSType, SMSid, attribute);
 
             SMSEntity.Attributes["new_messageid"] = new Random().Next(0, 10000);
-            service.Update(SMSEntity);
 
             Boolean checkWrite = false;
             try
@@ -42,7 +41,7 @@ namespace SentMSG
                 xmlWriter.WriteStartDocument();
                 xmlWriter.WriteStartElement("SMS");
 
-                xmlWriter.WriteStartElement("Id message");
+                xmlWriter.WriteStartElement("MessageId");
                 xmlWriter.WriteString($"{SMSEntity.Attributes["new_messageid"]}");
                 xmlWriter.WriteEndElement();
 
