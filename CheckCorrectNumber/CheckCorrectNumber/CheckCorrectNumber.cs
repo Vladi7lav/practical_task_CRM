@@ -19,16 +19,17 @@ namespace CheckCorrectNumber
         {
             try
             {
-                IPluginExecutionContext _context = (IPluginExecutionContext)serviceProvider.GetService(typeof(IPluginExecutionContext));
+                IPluginExecutionContext context = (IPluginExecutionContext)serviceProvider.GetService(typeof(IPluginExecutionContext));
                 IOrganizationServiceFactory serviceFactory = (IOrganizationServiceFactory)serviceProvider.GetService(typeof(IOrganizationServiceFactory));
-                var _service = serviceFactory.CreateOrganizationService(_context.UserId);
+                var service = serviceFactory.CreateOrganizationService(context.UserId);
 
-                if (_context.InputParameters.Contains("Target") && _context.InputParameters["Target"] is Entity)
+                if (!context.InputParameters.Contains("Target") || !(context.InputParameters["Target"] is Entity)) return;
+                else
                 {
-                    Entity SMS = (Entity)_context.InputParameters["Target"];
-                    if(SMS.Contains("new_phone_number_recipient") && !String.IsNullOrEmpty((string)SMS.Attributes["new_phone_number_recipient"]))
+                    Entity sms = (Entity)context.InputParameters["Target"];    //GetAttributeValue 
+                    if (sms.Contains("new_phone_number_recipient") && !String.IsNullOrEmpty((string)sms.Attributes["new_phone_number_recipient"]))
                     {
-                        String phonenumber = (string)SMS.Attributes["new_phone_number_recipient"];
+                        String phonenumber = (string)sms.Attributes["new_phone_number_recipient"];
                         Regex regexObj = new Regex(@"[^\d]");
                         if ((!phonenumber.Substring(0, 2).Equals("+7")) || regexObj.Replace(phonenumber, "").Length != 11)
                         {
@@ -41,7 +42,6 @@ namespace CheckCorrectNumber
             {
                 throw e;
             }
-            //throw new Exception("My Exception");
         }
     }
 }
