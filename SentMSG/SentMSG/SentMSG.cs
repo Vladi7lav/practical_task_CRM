@@ -19,8 +19,7 @@ namespace SentMSG
     public sealed class SentMSG : CodeActivity
     {
         protected override void Execute(CodeActivityContext executionContext)
-        {
-            //System.Diagnostics.Debugger.Launch();            
+        {    
 
             IWorkflowContext context = executionContext.GetExtension<IWorkflowContext>();
             IOrganizationServiceFactory serviceFactory = executionContext.GetExtension<IOrganizationServiceFactory>();
@@ -32,7 +31,7 @@ namespace SentMSG
 
             Entity SMSEntity = service.Retrieve(SMSType, SMSid, attribute);
 
-            SMSEntity.Attributes["new_messageid"] = new Random().Next(0, 10000);
+            SMSEntity.Attributes["new_messageid"] = (new Random().Next(0, 10000).ToString());
             Regex regexObj = new Regex(@"[^\d]");
             string correctNumber = ("+" + (string)regexObj.Replace((string)SMSEntity.Attributes["new_phone_number_recipient"], ""));
             
