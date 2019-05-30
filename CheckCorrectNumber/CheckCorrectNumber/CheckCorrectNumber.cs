@@ -22,20 +22,16 @@ namespace CheckCorrectNumber
                 IPluginExecutionContext context = (IPluginExecutionContext)serviceProvider.GetService(typeof(IPluginExecutionContext));
                 IOrganizationServiceFactory serviceFactory = (IOrganizationServiceFactory)serviceProvider.GetService(typeof(IOrganizationServiceFactory));
                 var service = serviceFactory.CreateOrganizationService(context.UserId);
-
-                if (!context.InputParameters.Contains("Target") || !(context.InputParameters["Target"] is Entity)) return;
+                                
+                Entity sms = (Entity)context.InputParameters["Target"]; 
+                String phonenumber = sms.GetAttributeValue<string>("new_phone_number_recipient");
+                if (String.IsNullOrEmpty(phonenumber)) return;
                 else
                 {
-                    Entity sms = (Entity)context.InputParameters["Target"]; 
-                    String phonenumber = sms.GetAttributeValue<string>("new_phone_number_recipient");
-                    if (String.IsNullOrEmpty(phonenumber)) return;
-                    else
+                    Regex regexObj = new Regex(@"[^\d]");
+                    if ((!phonenumber.Substring(0, 2).Equals("+7")) || regexObj.Replace(phonenumber, "").Length != 11)
                     {
-                        Regex regexObj = new Regex(@"[^\d]");
-                        if ((!phonenumber.Substring(0, 2).Equals("+7")) || regexObj.Replace(phonenumber, "").Length != 11)
-                        {
-                            throw new InvalidPluginExecutionException("Sorry phone number incorrect. \n The phone number must be 11 digits and begin with +7");
-                        }
+                        throw new InvalidPluginExecutionException("Sorry phone number incorrect. \n The phone number must be 11 digits and begin with +7");
                     }
                 }
             }
