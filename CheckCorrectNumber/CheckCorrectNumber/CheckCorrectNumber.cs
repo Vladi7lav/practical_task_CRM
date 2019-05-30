@@ -26,10 +26,11 @@ namespace CheckCorrectNumber
                 if (!context.InputParameters.Contains("Target") || !(context.InputParameters["Target"] is Entity)) return;
                 else
                 {
-                    Entity sms = (Entity)context.InputParameters["Target"];    //GetAttributeValue 
-                    if (sms.Contains("new_phone_number_recipient") && !String.IsNullOrEmpty((string)sms.Attributes["new_phone_number_recipient"]))
+                    Entity sms = (Entity)context.InputParameters["Target"]; 
+                    String phonenumber = sms.GetAttributeValue<string>("new_phone_number_recipient");
+                    if (String.IsNullOrEmpty(phonenumber)) return;
+                    else
                     {
-                        String phonenumber = (string)sms.Attributes["new_phone_number_recipient"];
                         Regex regexObj = new Regex(@"[^\d]");
                         if ((!phonenumber.Substring(0, 2).Equals("+7")) || regexObj.Replace(phonenumber, "").Length != 11)
                         {
