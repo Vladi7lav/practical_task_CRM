@@ -25,15 +25,15 @@ namespace SentMSG
             IOrganizationServiceFactory serviceFactory = executionContext.GetExtension<IOrganizationServiceFactory>();
             IOrganizationService service = serviceFactory.CreateOrganizationService(context.InitiatingUserId);
 
-            Guid SMSid = context.PrimaryEntityId;
-            string SMSType = context.PrimaryEntityName;
-            ColumnSet attribute = new ColumnSet(new string[] { "new_phone_number_recipient", "new_message", "new_messageid" });
+            Guid smsId = context.PrimaryEntityId;
+            string smsType = context.PrimaryEntityName;
+            ColumnSet attribute = new ColumnSet(new string[] { "new_phone_number_recipient", "new_message", "new_messageid", "statuscode", "statecode"});
 
-            Entity SMSEntity = service.Retrieve(SMSType, SMSid, attribute);
+            Entity smsEntity = service.Retrieve(smsType, smsId, attribute);
 
-            SMSEntity.Attributes["new_messageid"] = (new Random().Next(0, 10000).ToString());
+            smsEntity.Attributes["new_messageid"] = (new Random().Next(0, 10000).ToString());
             Regex regexObj = new Regex(@"[^\d]");
-            string correctNumber = ("+" + (string)regexObj.Replace((string)SMSEntity.Attributes["new_phone_number_recipient"], ""));
+            string correctNumber = ("+" + (string)regexObj.Replace((string)smsEntity.Attributes["new_phone_number_recipient"], ""));
             
             Boolean checkWrite = false;
             try
@@ -44,7 +44,7 @@ namespace SentMSG
                 xmlWriter.WriteStartElement("SMS");
 
                 xmlWriter.WriteStartElement("MessageId");
-                xmlWriter.WriteString($"{SMSEntity.Attributes["new_messageid"]}");
+                xmlWriter.WriteString($"{smsEntity.Attributes["new_messageid"]}");
                 xmlWriter.WriteEndElement();
 
                 xmlWriter.WriteStartElement("Phonenumber");
@@ -52,7 +52,7 @@ namespace SentMSG
                 xmlWriter.WriteEndElement();
 
                 xmlWriter.WriteStartElement("Message");
-                xmlWriter.WriteString($"{SMSEntity.Attributes["new_message"]}");
+                xmlWriter.WriteString($"{smsEntity.Attributes["new_message"]}");
                 xmlWriter.WriteEndElement();
 
                 xmlWriter.WriteEndDocument();
@@ -63,8 +63,13 @@ namespace SentMSG
             {
                 throw new InvalidWorkflowException(e.Message.ToString());
             }
-            if (checkWrite)
-                service.Update(SMSEntity);
+            if (!checkWrite) return;
+            else
+            {
+                smsEntity.GetAttributeValue<OptionSetValue>("statecode").Value = 1;
+                smsEntity.GetAttributeValue<OptionSetValue>("statuscode").Value = 100000002;
+                service.Update(smsEntity);
+            }               
         }
     }
 }
