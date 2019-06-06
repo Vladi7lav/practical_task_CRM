@@ -24,15 +24,20 @@ namespace CheckCorrectNumber
                 var service = serviceFactory.CreateOrganizationService(context.UserId);
                                 
                 Entity sms = (Entity)context.InputParameters["Target"]; 
-                String phonenumber = sms.GetAttributeValue<string>("new_phone_number_recipient");
-                if (String.IsNullOrEmpty(phonenumber)) return;
+                String phonenumbers = sms.GetAttributeValue<string>("new_phone_number_recipient");
+                
+                if (String.IsNullOrEmpty(phonenumbers)) return;
                 else
                 {
-                    Regex regexObj = new Regex(@"[^\d]");
-                    if ((!phonenumber.Substring(0, 2).Equals("+7")) || regexObj.Replace(phonenumber, "").Length != 11)
+                    string[] phonenumbersArray = Regex.Split(phonenumbers, "\\s*;\\s*\\b");
+                    foreach (var phonenumber in phonenumbersArray)
                     {
-                        throw new InvalidPluginExecutionException("Sorry phone number incorrect. \n The phone number must be 11 digits and begin with +7");
-                    }
+                        Regex regexObj = new Regex(@"[^\d]");
+                        if ((!phonenumber.Substring(0, 2).Equals("+7")) || (regexObj.Replace(phonenumber, "")).Length != 11)
+                        {
+                            throw new InvalidPluginExecutionException("Sorry phone number " + phonenumber + "incorrect. \n The phone number must be 11 digits and begin with +7");
+                        }
+                    }                    
                 }
             }
             catch (FaultException<OrganizationServiceFault> e)
