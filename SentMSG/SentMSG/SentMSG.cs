@@ -43,7 +43,7 @@ namespace SentMSG
             {
                 correctNumber += (String.IsNullOrEmpty(num) ? "" : "+" + (string)regexObj.Replace(num, "") + "; ");
             }
-            tracer.Trace("Last view: " + correctNumber);
+            //tracer.Trace("Last view: " + correctNumber);
             Boolean checkWrite = false;
             try
             {
