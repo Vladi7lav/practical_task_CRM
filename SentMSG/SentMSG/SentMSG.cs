@@ -25,16 +25,25 @@ namespace SentMSG
             IOrganizationServiceFactory serviceFactory = executionContext.GetExtension<IOrganizationServiceFactory>();
             IOrganizationService service = serviceFactory.CreateOrganizationService(context.InitiatingUserId);
 
+            //ITracingService tracer = executionContext.GetExtension<ITracingService>();
+
             Guid smsId = context.PrimaryEntityId;
             string smsType = context.PrimaryEntityName;
             ColumnSet attribute = new ColumnSet(new string[] { "new_phone_number_recipient", "new_message", "new_messageid", "statuscode", "statecode"});
 
             Entity smsEntity = service.Retrieve(smsType, smsId, attribute);
 
-            smsEntity.Attributes["new_messageid"] = (new Random().Next(0, 10000).ToString());
+            smsEntity.Attributes["new_messageid"] = (new Random().Next(100000, 999999).ToString());
+
             Regex regexObj = new Regex(@"[^\d]");
-            string correctNumber = ("+" + (string)regexObj.Replace((string)smsEntity.Attributes["new_phone_number_recipient"], ""));
-            
+            string number = (string)smsEntity.Attributes["new_phone_number_recipient"];
+            string correctNumber = "";
+            string[] phonenumbersArray = Regex.Split(number, "\\s*;\\s*");
+            foreach (var num in phonenumbersArray)
+            {
+                correctNumber += (String.IsNullOrEmpty(num) ? "" : "+" + (string)regexObj.Replace(num, "") + "; ");
+            }
+            tracer.Trace("Last view: " + correctNumber);
             Boolean checkWrite = false;
             try
             {
