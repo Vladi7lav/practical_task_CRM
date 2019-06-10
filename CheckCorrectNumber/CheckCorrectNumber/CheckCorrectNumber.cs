@@ -25,17 +25,17 @@ namespace CheckCorrectNumber
                                 
                 Entity sms = (Entity)context.InputParameters["Target"]; 
                 String phonenumbers = sms.GetAttributeValue<string>("new_phone_number_recipient");
-                
+
                 if (String.IsNullOrEmpty(phonenumbers)) return;
                 else
                 {
-                    string[] phonenumbersArray = Regex.Split(phonenumbers, "\\s*;\\s*\\b");
+                    string[] phonenumbersArray = Regex.Split(phonenumbers, "\\s*;\\s*");
                     foreach (var phonenumber in phonenumbersArray)
                     {
-                        Regex regexObj = new Regex(@"[^\d]");
-                        if ((!phonenumber.Substring(0, 2).Equals("+7")) || (regexObj.Replace(phonenumber, "")).Length != 11)
+                        Regex notD = new Regex(@"[^\d]");
+                        if (!String.IsNullOrEmpty(phonenumber) && ((!phonenumber.Substring(0, 2).Equals("+7")) || (notD.Replace(phonenumber, "")).Length != 11))
                         {
-                            throw new InvalidPluginExecutionException("Sorry phone number " + phonenumber + "incorrect. \n The phone number must be 11 digits and begin with +7");
+                            throw new InvalidPluginExecutionException("Sorry phone number " + phonenumber + " incorrect. \n The phone number must be 11 digits and begin with +7");
                         }
                     }                    
                 }
