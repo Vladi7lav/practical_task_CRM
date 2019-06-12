@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SentMSG", "SentMSG\SentMSG.csproj", "{787A7508-2DFF-4624-BD28-3B08CD11534D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SendSMS", "SendSMS\SendSMS.csproj", "{7A480A4C-DCF7-4994-9FAA-8F92A5CBB338}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{787A7508-2DFF-4624-BD28-3B08CD11534D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{787A7508-2DFF-4624-BD28-3B08CD11534D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{787A7508-2DFF-4624-BD28-3B08CD11534D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{787A7508-2DFF-4624-BD28-3B08CD11534D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A480A4C-DCF7-4994-9FAA-8F92A5CBB338}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A480A4C-DCF7-4994-9FAA-8F92A5CBB338}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A480A4C-DCF7-4994-9FAA-8F92A5CBB338}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A480A4C-DCF7-4994-9FAA-8F92A5CBB338}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {547A1649-4AAF-4DF8-8D82-8962FD201598}
+		SolutionGuid = {5C633E14-CD27-4E15-8D50-7DF25880EFAE}
 	EndGlobalSection
 EndGlobal
